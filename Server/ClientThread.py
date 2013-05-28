@@ -26,8 +26,8 @@ class ClientThread(Thread):
 		while(True):
 			request = self.__socket.recv(512)
 			if(request == ""):
-				self.__log.info("Connection closed in thread [%s]", self.__name)
-				self.__log.info("Exiting client thread [%s]", self.__name)
+				self.__log.debug("Connection closed in thread [%s]", self.__name)
+				self.__log.debug("Exiting client thread [%s]", self.__name)
 				self.__socket.close()
 				thread.exit()
 
@@ -38,7 +38,7 @@ class ClientThread(Thread):
 	def __setLocation(self):
 		self.__log.debug("__setLocation called")
 		data = self.__messageParser.getData()
-		self.__log.debug("user: [" + data["id"] + "], X:[" + data["longtitude"] + "], Y:[" + data["latitude"] + "]")
+		self.__log.info("user: [" + data["id"] + "], X:[" + data["longtitude"] + "], Y:[" + data["latitude"] + "]")
 	
 	def __getLocation(self):
 		self.__log.debug("__getLocation called")

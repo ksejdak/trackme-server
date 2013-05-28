@@ -7,7 +7,7 @@ class Logger(object):
 		formatter = logging.Formatter("[%(levelname)s] %(message)s")
 		
 		consoleHandler = logging.StreamHandler()
-		consoleHandler.setLevel(logging.DEBUG)
+		consoleHandler.setLevel(logging.INFO)
 		consoleHandler.setFormatter(formatter)
 		
 		logger = logging.getLogger("ServerLogger")

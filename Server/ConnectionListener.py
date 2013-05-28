@@ -24,14 +24,14 @@ class ConnectionListener(object):
 			return
 
 		while(True):
-			self.__log.info("Waiting for connection...")
+			self.__log.debug("Waiting for connection...")
 			try:
 				clientSocket, clientAddress = self.__socket.accept()
 			except socket.error, e:
 				self.__log.error("Socket error: " + str(e))
 				return
 			
-			self.__log.info("Client connected: %s:%d", clientAddress[0], clientAddress[1])
+			self.__log.debug("Client connected: %s:%d", clientAddress[0], clientAddress[1])
 			clientId = clientAddress[0] + ":" + str(clientAddress[1])
 			thread = ClientThread(clientSocket, clientId)
 			thread.start()
