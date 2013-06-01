@@ -48,7 +48,7 @@ class ClientThread(Thread):
 		self.__log.debug("__getLocation called")
 		data = self.__messageParser.getData()
 		location = self.__database.getLocation(data["userId"], data["whoseId"])
-		self.__socket.send(location["longtitude"] + ":" + location["latitude"])
+		self.__socket.send(location["longtitude"] + ":" + location["latitude"] + "\n")
 		self.__log.info("GET -- userId: [" + data["userId"] + "], whoseId: [" + data["whoseId"] + "]")
 	
 	def __allowTracking(self):
