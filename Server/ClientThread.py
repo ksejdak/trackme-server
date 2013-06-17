@@ -22,6 +22,9 @@ class ClientThread(Thread):
 			"setLocation": self.__setLocation,
 			"getLocation": self.__getLocation,
 			"allowTracking": self.__allowTracking,
+			"registerUser": self.__registerUser,
+			"loginUser": self.__loginUser,
+			"checkPermission": self.__checkPermission,
 			"invalid": self.__invalidMessage
 		}
 		
@@ -61,3 +64,30 @@ class ClientThread(Thread):
 		self.__log.debug("__invalidMessage called")
 		data = self.__messageParser.getData()
 		self.__log.error("invalid message received: [" + data["message"] + "]")
+		
+	def __registerUser(self):
+		self.__log.debug("__registerUser called")
+		data = self.__messageParser.getData()
+		self.__database.registerUser(data["userId"], data["password"])
+		self.__log.info("REGISTERED USER -- userId: [" + data["userId"] + "]")
+		
+	def __loginUser(self):
+		self.__log.debug("__loginUser called")
+		data = self.__messageParser.getData()
+		correct = self.__database.loginUser(data["userId"], data["password"])
+		if(correct == True):
+			self.__socket.send("OK\n")
+			self.__log.info("LOGGED IN -- userId: [" + data["userId"] + "]")
+		else:
+			self.__socket.send("ERROR\n")
+			self.__log.info("AUTHENTICATION FAILED -- userId: [" + data["userId"] + "]")
+			
+	def __checkPermission(self):
+		self.__log.debug("__checkPermission called")
+		data = self.__messageParser.getData()
+		correct = self.__database.checkPermission(data["userId"], data["viewerId"])
+		if(correct == True):
+			self.__socket.send("OK\n")
+		else:
+			self.__log.info("NO PERMISSION -- userId: [" + data["userId"] + "], viewerId: [" + data["viewerId"] + "]")
+			self.__socket.send("ERROR\n")

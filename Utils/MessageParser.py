@@ -25,6 +25,21 @@ class MessageParser(object):
 			self.__data["userId"] = words[1]
 			self.__data["viewerId"] = words[2]
 			return "allowTracking"
+		elif(words[0] == "REGISTER_USER"):
+			self.__data.clear()
+			self.__data["userId"] = words[1]
+			self.__data["password"] = words[2]
+			return "registerUser"
+		elif(words[0] == "LOGIN"):
+			self.__data.clear()
+			self.__data["userId"] = words[1]
+			self.__data["password"] = words[2]
+			return "loginUser"
+		elif(words[0] == "CHECK_PERMISSION"):
+			self.__data.clear()
+			self.__data["viewerId"] = words[1]
+			self.__data["userId"] = words[2]
+			return "checkPermission"
 		else:
 			self.__data.clear()
 			self.__data["message"] = message
